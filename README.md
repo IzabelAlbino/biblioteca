@@ -5,3 +5,5 @@ Utilizei conceitos avançados de Java, como classes, objetos e listas, para cria
 Foi uma ótima oportunidade para aplicar meus conhecimentos em um projeto prático e desafiador.
 
 Ainda falta implementar algumas funcionalidades como  realizarEmprestimo e realizarDevolucao! 
+
+segundo COMMIT - Foram adicionadas as funcionalidades realizarEmprestimos e realizarDevolucao ! 
