@@ -1,4 +1,3 @@
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -56,5 +55,79 @@ public class Biblioteca {
         }
     }
 
+    public void realizarEmprestimo() {
+        System.out.println("///////REALIZAR EMPRESTIMO/////////");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Digite o título do livro:");
+        String tituloLivro = scan.nextLine();
+        System.out.println("Digite o nome do usuário:");
+        String nomeUsuario = scan.nextLine();
 
+        Livro livro = buscarLivroPorTitulo(tituloLivro);
+        Usuario usuario = buscarUsuarioPorNome(nomeUsuario);
+
+        if (livro != null && usuario != null && livro.isDiponivel()) {
+            livro.setDisponivel(false);
+            Emprestimo emprestimo = new Emprestimo(livro, usuario, "data_emprestimo", "data_devolucao");
+            emprestimos.add(emprestimo);
+
+            System.out.println("Empréstimo realizado com sucesso!");
+        } else {
+            System.out.println("Não foi possível realizar o empréstimo. Verifique se o livro está disponível e se o usuário existe.");
+        }
+    }
+
+    public void realizarDevolucao() {
+        System.out.println("///////REALIZAR DEVOLUÇÃO////////");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Digite o título do livro:");
+        String tituloLivro = scan.nextLine();
+        System.out.println("Digite o nome do usuário:");
+        String nomeUsuario = scan.nextLine();
+
+        Livro livro = buscarLivroPorTitulo(tituloLivro);
+        Usuario usuario = buscarUsuarioPorNome(nomeUsuario);
+
+        if (livro != null && usuario != null) {
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo.getLivro().equals(livro) && emprestimo.getUsuario().equals(usuario)) {
+                    livro.setDisponivel(true);
+                    emprestimos.remove(emprestimo);
+                    System.out.println("Devolução realizada com sucesso!");
+                    return;
+                }
+            }
+            System.out.println("Não foi possível encontrar o empréstimo. Verifique se o livro foi emprestado para o usuário.");
+        } else {
+            System.out.println("Não foi possível realizar a devolução. Verifique se o livro e o usuário existem.");
+        }
+    }
+
+
+
+    private Livro buscarLivroPorTitulo(String titulo) {
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                return livro;
+            }
+        }
+        return null;
+    }
+
+    private Usuario buscarUsuarioPorNome(String nome) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNome().equalsIgnoreCase(nome)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    public void listarLivrosDisponiveis(){
+        for (Livro livro : livros){
+            if (livro.isDiponivel()){
+                System.out.println(livro);
+            }
+        }
+    }
 }

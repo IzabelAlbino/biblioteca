@@ -53,4 +53,8 @@ public class Livro {
                 ", disponivel=" + diponivel +
                 '}';
     }
+
+    public void setDisponivel(boolean b) {
+        this.diponivel = b;
+    }
 }
